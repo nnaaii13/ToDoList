@@ -92,3 +92,81 @@ h4{
     border-radius: 10px;
     font-family: cursive;
 }
+
+/* Fondo inicial morado */
+.tema-morado {
+    background-color: #4e0161; /* Morado */
+    color: white;
+}
+
+/* Fondos de los temas */
+.tema-azul {
+    background-color: #0056b3; /* Azul */
+    color: white;
+}
+
+.tema-rosa {
+    background-color: #ff69b4; /* Rosa */
+    color: black;
+}
+
+/* Contenedor de los botones */
+.contenedor-botones {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    gap: 10px;
+}
+
+/* Fondos de los temas */
+.tema-morado {
+    background-color: #4e0161; /* Morado */
+    color: white;
+}
+
+.tema-azul {
+    background-color: #0056b3; /* Azul */
+    color: white;
+}
+
+.tema-rosa {
+    background-color: #ff69b4; /* Rosa */
+    color: black;
+}
+
+/* Contenedor de los botones */
+.contenedor-botones {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    gap: 10px;
+}
+
+/* Botones circulares */
+.botonTema {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.botonTema:hover {
+    transform: scale(1.1);
+}
+
+/* Estilos individuales para cada botón */
+.botonMorado {
+    background-color: #4e0161; /* Morado */
+}
+
+.botonAzul {
+    background-color: #0056b3; /* Azul */
+}
+
+.botonRosa {
+    background-color: #ff69b4; /* Rosa */
+}
