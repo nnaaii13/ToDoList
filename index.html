@@ -7,41 +7,38 @@
     <title>ToDoList</title>
 </head>
 
-<body >
-    <div id="particles-js">
-       
+<body>
+    <div id="particles-js"></div>
+
+    <div id="app">
+        <!-- Titulo -->
+        <div class="titulo">
+            <h1>ToDo List Naila</h1>
+        </div>
+        
+        <!-- Crear -->
+        <div class="seccion-crear">
+            <input type="text" id="input_crear" placeholder="Nueva tarea...">
+            <button type="button" id="crear" onclick="crearToDoFn()">Crear</button>
+        </div>
+
+        <!-- Sección de tríptico -->
+        <div class="triptico">
+            <div class="columna">
+                <h4>Tareas No Realizadas</h4>
+                <div id="tareas_no_realizadas"></div>
+            </div>
+            <div class="columna">
+                <h4>Tareas Realizadas</h4>
+                <div id="tareas_realizadas"></div>
+            </div>
+            <div class="columna">
+                <h4>Tareas Eliminadas</h4>
+                <div id="tareas_eliminadas"></div>
+            </div>
+        </div>
     </div>
 
-        <div id ="app">
-            <!-- Titulo -->
-            <div class="titulo">
-                <h1>ToDo List Naila</h1>
-            </div>
-            
-        
-            <!-- crear-->
-            <div class="seccion-crear">
-                <input type="text" id="input_crear">
-                <button type="button" id="crear" onclick="crearToDoFn()">Crear</button>
-            </div>
-            <!-- Listar to dos-->
-            <div id="listar_todos">
-                <h4>No hay To Do's creados</h4>
-                <!--
-                <div id="actividad">
-                    <input type="checkbox">
-                    <span>Actividad 1</span>
-                    <button id="eliminar">Eliminar</button>
-                </div>
-                -->
-            </div>
-            
-    
-        </div>
-    
-        
-
-    
     <script type="text/javascript" src="js/main.js"></script>
     <script src="js/particles.min.js"></script>
     <script src="js/particlesjs-config.json"></script>

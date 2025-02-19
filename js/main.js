@@ -20,7 +20,8 @@ function crearToDoFn() {
     } else {
         var nuevo_todo = {
             titulo: input_crear.value,
-            hecho: false
+            hecho: false,
+            eliminado: false
         };
     
         todos.push(nuevo_todo);
@@ -31,21 +32,26 @@ function crearToDoFn() {
 }
 
 function listarToDosFn() {
-    var listar_todos = document.querySelector("#listar_todos");
-    listar_todos.innerHTML = "";
+    var tareas_no_realizadas = document.querySelector("#tareas_no_realizadas");
+    var tareas_realizadas = document.querySelector("#tareas_realizadas");
+    var tareas_eliminadas = document.querySelector("#tareas_eliminadas");
+
+    tareas_no_realizadas.innerHTML = "";
+    tareas_realizadas.innerHTML = "";
+    tareas_eliminadas.innerHTML = "";
+
     for(var i = 0; i < todos.length; i++) {
         var contenedor_todo = document.createElement("div");
         contenedor_todo.className = "todo";
+        
         var checkbox_hecho = document.createElement("input");
         checkbox_hecho.type = "checkbox";
         checkbox_hecho.checked = todos[i].hecho;
         checkbox_hecho.setAttribute("onChange", "marcar_hechoToDoFn(" + i + ")");
-        var spam_titulo = document.createElement("spam");
+        
+        var spam_titulo = document.createElement("span");
         spam_titulo.textContent = todos[i].titulo;
         spam_titulo.className = "spam";
-        if(todos[i].hecho === true) {
-            spam_titulo.className = "hecho";
-        }
         
         var buttom_eliminar = document.createElement("button");
         buttom_eliminar.textContent = "Eliminar";
@@ -56,12 +62,18 @@ function listarToDosFn() {
         contenedor_todo.appendChild(spam_titulo);
         contenedor_todo.appendChild(buttom_eliminar);
 
-        listar_todos.appendChild(contenedor_todo);
+        if (todos[i].eliminado) {
+            tareas_eliminadas.appendChild(contenedor_todo);
+        } else if (todos[i].hecho) {
+            tareas_realizadas.appendChild(contenedor_todo);
+        } else {
+            tareas_no_realizadas.appendChild(contenedor_todo);
+        }
     }
 }
 
 function eliminar_todo(i) {
-    todos.splice(i, 1);
+    todos[i].eliminado = true; // Marcar como eliminado
     listarToDosFn();
     guardarToDos(); // Guardar en LocalStorage
 }
