@@ -101,13 +101,13 @@ body{
 /* Fondo inicial morado */
 .tema-morado {
     background-color: #4e0161; /* Morado */
-    color: white;
+    color: rgb(0, 0, 0);
 }
 
 /* Fondos de los temas */
 .tema-azul {
     background-color: #0056b3; /* Azul */
-    color: white;
+    color: rgb(0, 0, 0);
 }
 
 .tema-rosa {
@@ -127,12 +127,12 @@ body{
 /* Fondos de los temas */
 .tema-morado {
     background-color: #4e0161; /* Morado */
-    color: white;
+    color: rgb(0, 0, 0);
 }
 
 .tema-azul {
     background-color: #0056b3; /* Azul */
-    color: white;
+    color: rgb(0, 0, 0);
 }
 
 .tema-rosa {
