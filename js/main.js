@@ -21,7 +21,10 @@ function crearToDoFn() {
         var nuevo_todo = {
             titulo: input_crear.value,
             hecho: false,
-            eliminado: false
+            eliminado: false,
+            fechaCreacion: new Date().toLocaleString(), // Fecha de creación
+            fechaCompletado: null, // Fecha de completado
+            fechaEliminacion: null // Fecha de eliminación
         };
     
         todos.push(nuevo_todo);
@@ -53,6 +56,10 @@ function listarToDosFn() {
         spam_titulo.textContent = todos[i].titulo;
         spam_titulo.className = "spam";
         
+        var fechaCreacion = document.createElement("span");
+        fechaCreacion.textContent = "Creado: " + todos[i].fechaCreacion;
+        fechaCreacion.className = "fecha";
+
         var buttom_eliminar = document.createElement("button");
         buttom_eliminar.textContent = "Eliminar";
         buttom_eliminar.setAttribute("onClick", "eliminar_todo(" + i + ")");
@@ -60,11 +67,20 @@ function listarToDosFn() {
 
         contenedor_todo.appendChild(checkbox_hecho);
         contenedor_todo.appendChild(spam_titulo);
+        contenedor_todo.appendChild(fechaCreacion);
         contenedor_todo.appendChild(buttom_eliminar);
 
         if (todos[i].eliminado) {
+            var fechaEliminacion = document.createElement("span");
+            fechaEliminacion.textContent = "Eliminado: " + todos[i].fechaEliminacion;
+            fechaEliminacion.className = "fecha";
+            contenedor_todo.appendChild(fechaEliminacion);
             tareas_eliminadas.appendChild(contenedor_todo);
         } else if (todos[i].hecho) {
+            var fechaCompletado = document.createElement("span");
+            fechaCompletado.textContent = "Completado: " + todos[i].fechaCompletado;
+            fechaCompletado.className = "fecha";
+            contenedor_todo.appendChild(fechaCompletado);
             tareas_realizadas.appendChild(contenedor_todo);
         } else {
             tareas_no_realizadas.appendChild(contenedor_todo);
@@ -74,12 +90,18 @@ function listarToDosFn() {
 
 function eliminar_todo(i) {
     todos[i].eliminado = true; // Marcar como eliminado
+    todos[i].fechaEliminacion = new Date().toLocaleString(); // Guardar fecha de eliminación
     listarToDosFn();
     guardarToDos(); // Guardar en LocalStorage
 }
 
 function marcar_hechoToDoFn(i) {
     todos[i].hecho = !todos[i].hecho;
+    if (todos[i].hecho) {
+        todos[i].fechaCompletado = new Date().toLocaleString(); // Guardar fecha de completado
+    } else {
+        todos[i].fechaCompletado = null; // Limpiar fecha si se desmarca
+    }
     listarToDosFn();
     guardarToDos(); // Guardar en LocalStorage
 }
@@ -116,6 +138,14 @@ contenedorBotones.appendChild(botonMorado);
 contenedorBotones.appendChild(botonAzul);
 contenedorBotones.appendChild(botonRosa);
 document.body.appendChild(contenedorBotones);
+
+function eliminarTodasLasTareas() {
+    if (confirm("¿Estás seguro de que deseas eliminar todas las tareas definitivamente?")) {
+        localStorage.removeItem('todos'); // Elimina las tareas del LocalStorage
+        todos = []; // Limpia el array de tareas
+        listarToDosFn(); // Actualiza la interfaz
+    }
+}
 
 // Cargar la lista al iniciar
 cargarToDos();
