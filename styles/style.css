@@ -76,7 +76,6 @@ body {
     gap: 10px;
 }
 
-/* Cambiar el color de los títulos de las columnas a negro */
 .triptico h4 {
     color: black; /* Color negro para los títulos de las columnas */
     font-family: cursive;
