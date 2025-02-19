@@ -34,60 +34,93 @@ function crearToDoFn() {
     }
 }
 
+// Función para listar tareas según el filtro seleccionado
 function listarToDosFn() {
     var tareas_no_realizadas = document.querySelector("#tareas_no_realizadas");
     var tareas_realizadas = document.querySelector("#tareas_realizadas");
     var tareas_eliminadas = document.querySelector("#tareas_eliminadas");
 
+    // Obtener el valor del filtro
+    var filtro = document.querySelector("#filtro_tareas").value;
+
+    // Limpiar las listas
     tareas_no_realizadas.innerHTML = "";
     tareas_realizadas.innerHTML = "";
     tareas_eliminadas.innerHTML = "";
 
-    for(var i = 0; i < todos.length; i++) {
-        var contenedor_todo = document.createElement("div");
-        contenedor_todo.className = "todo";
-        
-        var checkbox_hecho = document.createElement("input");
-        checkbox_hecho.type = "checkbox";
-        checkbox_hecho.checked = todos[i].hecho;
-        checkbox_hecho.setAttribute("onChange", "marcar_hechoToDoFn(" + i + ")");
-        
-        var spam_titulo = document.createElement("span");
-        spam_titulo.textContent = todos[i].titulo;
-        spam_titulo.className = "spam";
-        
-        var fechaCreacion = document.createElement("span");
-        fechaCreacion.textContent = "Creado: " + todos[i].fechaCreacion;
-        fechaCreacion.className = "fecha";
+    // Ocultar o mostrar columnas según el filtro
+    if (filtro === "realizadas") {
+        tareas_no_realizadas.style.display = "none";
+        tareas_eliminadas.style.display = "none";
+        tareas_realizadas.style.display = "block";
+    } else if (filtro === "no_realizadas") {
+        tareas_realizadas.style.display = "none";
+        tareas_eliminadas.style.display = "none";
+        tareas_no_realizadas.style.display = "block";
+    } else if (filtro === "eliminadas") {
+        tareas_no_realizadas.style.display = "none";
+        tareas_realizadas.style.display = "none";
+        tareas_eliminadas.style.display = "block";
+    } else {
+        // Si el filtro es "todas"
+        tareas_no_realizadas.style.display = "block";
+        tareas_realizadas.style.display = "block";
+        tareas_eliminadas.style.display = "block";
+    }
 
-        var buttom_eliminar = document.createElement("button");
-        buttom_eliminar.textContent = "Eliminar";
-        buttom_eliminar.setAttribute("onClick", "eliminar_todo(" + i + ")");
-        buttom_eliminar.className = "boton_eliminar";
+    for (var i = 0; i < todos.length; i++) {
+        // Filtrar según el estado
+        if (filtro === "todas" || 
+            (filtro === "no_realizadas" && !todos[i].hecho && !todos[i].eliminado) ||
+            (filtro === "realizadas" && todos[i].hecho && !todos[i].eliminado) ||
+            (filtro === "eliminadas" && todos[i].eliminado)) {
+            
+            var contenedor_todo = document.createElement("div");
+            contenedor_todo.className = "todo";
+            
+            var checkbox_hecho = document.createElement("input");
+            checkbox_hecho.type = "checkbox";
+            checkbox_hecho.checked = todos[i].hecho;
+            checkbox_hecho.setAttribute("onChange", "marcar_hechoToDoFn(" + i + ")");
+            
+            var spam_titulo = document.createElement("span");
+            spam_titulo.textContent = todos[i].titulo;
+            spam_titulo.className = "spam";
+            
+            var fechaCreacion = document.createElement("span");
+            fechaCreacion.textContent = "Creado: " + todos[i].fechaCreacion;
+            fechaCreacion.className = "fecha";
 
-        contenedor_todo.appendChild(checkbox_hecho);
-        contenedor_todo.appendChild(spam_titulo);
-        contenedor_todo.appendChild(fechaCreacion);
-        contenedor_todo.appendChild(buttom_eliminar);
+            var buttom_eliminar = document.createElement("button");
+            buttom_eliminar.textContent = "Eliminar";
+            buttom_eliminar.setAttribute("onClick", "eliminar_todo(" + i + ")");
+            buttom_eliminar.className = "boton_eliminar";
 
-        if (todos[i].eliminado) {
-            var fechaEliminacion = document.createElement("span");
-            fechaEliminacion.textContent = "Eliminado: " + todos[i].fechaEliminacion;
-            fechaEliminacion.className = "fecha";
-            contenedor_todo.appendChild(fechaEliminacion);
-            tareas_eliminadas.appendChild(contenedor_todo);
-        } else if (todos[i].hecho) {
-            var fechaCompletado = document.createElement("span");
-            fechaCompletado.textContent = "Completado: " + todos[i].fechaCompletado;
-            fechaCompletado.className = "fecha";
-            contenedor_todo.appendChild(fechaCompletado);
-            tareas_realizadas.appendChild(contenedor_todo);
-        } else {
-            tareas_no_realizadas.appendChild(contenedor_todo);
+            contenedor_todo.appendChild(checkbox_hecho);
+            contenedor_todo.appendChild(spam_titulo);
+            contenedor_todo.appendChild(fechaCreacion);
+            contenedor_todo.appendChild(buttom_eliminar);
+
+            if (todos[i].eliminado) {
+                var fechaEliminacion = document.createElement("span");
+                fechaEliminacion.textContent = "Eliminado: " + todos[i].fechaEliminacion;
+                fechaEliminacion.className = "fecha";
+                contenedor_todo.appendChild(fechaEliminacion);
+                tareas_eliminadas.appendChild(contenedor_todo);
+            } else if (todos[i].hecho) {
+                var fechaCompletado = document.createElement("span");
+                fechaCompletado.textContent = "Completado: " + todos[i].fechaCompletado;
+                fechaCompletado.className = "fecha";
+                contenedor_todo.appendChild(fechaCompletado);
+                tareas_realizadas.appendChild(contenedor_todo);
+            } else {
+                tareas_no_realizadas.appendChild(contenedor_todo);
+            }
         }
     }
 }
 
+// Función para eliminar una tarea
 function eliminar_todo(i) {
     todos[i].eliminado = true; // Marcar como eliminado
     todos[i].fechaEliminacion = new Date().toLocaleString(); // Guardar fecha de eliminación
@@ -95,6 +128,7 @@ function eliminar_todo(i) {
     guardarToDos(); // Guardar en LocalStorage
 }
 
+// Función para marcar una tarea como hecha
 function marcar_hechoToDoFn(i) {
     todos[i].hecho = !todos[i].hecho;
     if (todos[i].hecho) {
@@ -146,6 +180,9 @@ function eliminarTodasLasTareas() {
         listarToDosFn(); // Actualiza la interfaz
     }
 }
+
+// Agregar evento para el filtro
+document.querySelector("#filtro_tareas").addEventListener("change", listarToDosFn);
 
 // Cargar la lista al iniciar
 cargarToDos();

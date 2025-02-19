@@ -184,3 +184,13 @@ body {
 #eliminar_todas:hover {
     background-color: #ff1a1a; /* Color de fondo al pasar el mouse */
 }
+
+#filtro_tareas{
+    border-radius: 20px; /* Bordes redondeados */
+    background-color: #786060; /* Color de fondo rojo */
+    color: rgb(0, 0, 0); /* Color del texto */
+    border: none; /* Sin borde */
+    padding: 10px 20px; /* Espaciado interno */
+    font-size: 12px; /* Tamaño de fuente */
+    cursor: pointer; /* Cambia el cursor al pasar el mouse */
+}
